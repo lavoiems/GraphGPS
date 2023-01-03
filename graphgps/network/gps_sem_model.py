@@ -20,9 +20,12 @@ class SEM(torch.nn.Module):
         self.V = V
         self.tau = tau
 
-    def forward(self, x):
+    def forward(self, x, normalize=True):
         o = x.x
         o = self.embedder(o)
+        if not normalize:
+            x.x = o
+            return x
         o = o.view(-1, self.L, self.V)
         o = torch.nn.functional.softmax(o/self.tau, -1)
         x.x = o.view(-1, self.L*self.V)
@@ -78,6 +81,8 @@ class GPSSEMModel(torch.nn.Module):
 
     def __init__(self, dim_in, dim_out):
         super().__init__()
+        self.dim_in = dim_in
+        self.dim_out = dim_out
         self.encoder = FeatureEncoder(dim_in)
         dim_in = self.encoder.dim_in
 
@@ -122,4 +127,10 @@ class GPSSEMModel(torch.nn.Module):
     def forward(self, batch):
         for module in self.children():
             batch = module(batch)
+        return batch
+
+    def forward_unnormalize_sem(self, batch):
+        for module in list(self.children())[:-2]:
+            batch = module(batch)
+        batch = self.post_mp_sem(batch, normalize=False)
         return batch

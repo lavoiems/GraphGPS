@@ -159,4 +159,4 @@ dmypy.json
 # vim edit buffer
 *.swp
 
-
+slurm*.out
