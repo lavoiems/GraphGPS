@@ -22,9 +22,9 @@ pretrained:
   reset_prediction_head: True
   freeze_main: False
 sem:
-  L: 256
+  L: 64
   V: 16
-  tau: 0.1
+  tau: 1.0
 train:
   mode: custom
   batch_size: 32

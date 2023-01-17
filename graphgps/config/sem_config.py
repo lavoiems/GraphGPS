@@ -21,3 +21,5 @@ def set_cfg_sem(cfg):
 
     # SEM temperature
     cfg.sem.tau = 1.
+
+    cfg.sem.distill_tau = 1.

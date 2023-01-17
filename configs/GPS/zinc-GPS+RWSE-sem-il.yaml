@@ -11,23 +11,20 @@ dataset:
   task_type: regression
   transductive: False
   node_encoder: True
-  node_encoder_name: TypeDictNode+LapPE
+  node_encoder_name: TypeDictNode+RWSE
   node_encoder_num_types: 28
   node_encoder_bn: False
   edge_encoder: True
   edge_encoder_name: TypeDictEdge
   edge_encoder_num_types: 4
   edge_encoder_bn: False
-posenc_LapPE:
+posenc_RWSE:
   enable: True
-  eigen:
-    laplacian_norm: none
-    eigvec_norm: L2
-    max_freqs: 8
-  model: DeepSet
-  dim_pe: 8
-  layers: 2
-  raw_norm_type: none
+  kernel:
+    times_func: range(1,21)
+  model: Linear
+  dim_pe: 28
+  raw_norm_type: BatchNorm
 train:
   mode: custom
   batch_size: 32
@@ -63,11 +60,15 @@ optim:
   weight_decay: 1e-5
   base_lr: 0.001
   max_epoch: 2000
-  distill_epoch: 0
+  distill_epoch: 2
   scheduler: cosine_with_warmup
   num_warmup_epochs: 50
-  num_iteration: 1
+  num_iteration: 3
 sem:
   L: 64
   V: 16
   tau: 1.
+pretrained:
+  dir: /network/scratch/l/lavoiems/graphgps/zinc/test7-1/zinc-GPS+RWSE-sem
+  reset_prediction_head: False
+  freeze_main: False
