@@ -31,7 +31,7 @@ train:
   eval_period: 1
   ckpt_period: 100
 model:
-  type: GPSModel
+  type: GPSSEMModel
   loss_fun: l1
   edge_decoding: dot
   graph_pooling: add
@@ -64,3 +64,7 @@ optim:
   scheduler: cosine_with_warmup
   num_warmup_epochs: 50
   num_iteration: 1
+sem:
+  L: 64
+  V: 16
+  tau: 1.

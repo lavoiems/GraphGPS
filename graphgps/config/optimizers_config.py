@@ -25,3 +25,11 @@ def extended_optim_cfg(cfg):
 
     # Clip gradient norms while training
     cfg.optim.clip_grad_norm = False
+
+    cfg.optim.num_iteration = 5
+
+    cfg.optim.distill_epoch = 20
+
+    cfg.optim.N_train_gps = 20
+
+    cfg.optim.head_finetune = 5
